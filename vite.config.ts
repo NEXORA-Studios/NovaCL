@@ -21,7 +21,7 @@ export default defineConfig(async () => ({
               }
             : undefined,
         watch: {
-            ignored: ["**/src-tauri/**"],
+            ignored: [".github/**", "docs/**", "**/src-tauri/**", "dist/**"],
         },
     },
     envPrefix: ["NOVA_"],

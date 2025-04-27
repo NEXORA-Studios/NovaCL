@@ -13,3 +13,7 @@ img:not(.draggable) {
 ::-webkit-scrollbar {
     display: none;
 }
+
+button:has(:disabled) {
+    cursor: not-allowed;
+}

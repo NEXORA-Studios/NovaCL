@@ -104,6 +104,7 @@
                     </div>
                     <button
                         class="btn btn-square btn-info"
+                        disabled
                         @click="
                             openUrl(
                                 'https://github.com/NEXORA-Studios/NovaCL/issues'
@@ -126,9 +127,7 @@
                     </div>
                     <button
                         class="btn btn-square btn-info"
-                        @click="
-                            openUrl('https://github.com/NEXORA-Studios/NovaCL')
-                        ">
+                        @click="openUrl('https://afdian.com/@NEXORA-Studios')">
                         <i class="icon-[mdi--open-in-new] size-6" />
                     </button>
                 </li>

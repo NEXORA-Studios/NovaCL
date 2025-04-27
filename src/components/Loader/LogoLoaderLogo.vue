@@ -37,7 +37,7 @@
         [".dots", ".center"].forEach((selector: string) => {
             document.querySelectorAll<SVGCircleElement>(`${selector}.${randomId}`).forEach((dot) => {
                 const dotFactor = props.error ? randomFloat(0, 1) : 0;
-                dot.style.opacity = String(dotFactor);
+                dot.style.scale = String(dotFactor);
             });
         });
         props.error && svg.value ? (svg.value.style.transform = `rotate(${randomFloat(0, 360)}deg)`) : null;
@@ -51,7 +51,7 @@
         });
     }
     function animateDots(selectors: string | string[], show: boolean) {
-        const _handler = (selector: string) => document.querySelectorAll<SVGCircleElement>(`${selector}.${randomId}`).forEach((dot) => (dot.style.opacity = show ? "1" : "0"));
+        const _handler = (selector: string) => document.querySelectorAll<SVGCircleElement>(`${selector}.${randomId}`).forEach((dot) => (dot.style.scale = show ? "1" : "0"));
         if (typeof selectors === "string") {
             _handler(selectors);
         } else {
@@ -82,7 +82,7 @@
         animateLine([".line-left", ".line-right"], 2);
         await sleep(1000);
         animateDots(".center", false);
-        setTimeout(doAnimation, 1000);
+        setTimeout(doAnimation, 2000);
     }
 
     onMounted(() => {
@@ -188,10 +188,13 @@
 </template>
 
 <style lang="scss" module>
-    .LogoSvg mask path {
-        transition: all 0.5s ease-in-out;
+    .LogoSvg mask {
+        path,
+        circle {
+            transition: all 0.5s ease-in-out;
+        }
     }
     .LogoSvg mask circle {
-        transition: opacity 0.5s ease-in-out;
+        transform-origin: 50% 50%;
     }
 </style>

@@ -88,13 +88,13 @@
             width="22"
             height="22" />
         <h1 class="text-lg mr-auto">NovaCL {{ title }}</h1>
-        <!-- 右侧：爱发电 -->
+        <!-- 右侧：新闻 -->
         <div
             class="tooltip tooltip-left"
-            data-tip="在 爱发电 上赞助 NovaCL">
+            data-tip="最近都发生了什么？查看新闻">
             <NavButton @click="openUrl(`https://afdian.com/@NEXORA-Studios`)">
                 <i
-                    class="icon-[meteor-icons--patreon] scale-75 w-[22px] h-[22px]" />
+                    class="icon-[meteor-icons--newspaper] scale-75 size-5.5" />
             </NavButton>
         </div>
         <!-- 右侧：动态页面切换菜单 -->
