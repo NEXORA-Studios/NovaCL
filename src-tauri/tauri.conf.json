@@ -1,0 +1,48 @@
+{
+    "$schema": "https://schema.tauri.app/config/2",
+    "productName": "novacl",
+    "version": "0.1.0",
+    "identifier": "NovaCL",
+    "build": {
+        "beforeDevCommand": "pnpm dev",
+        "devUrl": "http://localhost:1420",
+        "beforeBuildCommand": "pnpm build",
+        "frontendDist": "../dist"
+    },
+    "app": {
+        "windows": [
+            {
+                "title": "NovaCL",
+                "width": 1024,
+                "height": 768,
+                "minWidth": 1024,
+                "minHeight": 768,
+                "decorations": false,
+                "center": true
+            }
+        ],
+        "security": {
+            "csp": null
+        }
+    },
+    "bundle": {
+        "active": true,
+        "targets": "all",
+        "icon": [
+            "icons/32x32.png",
+            "icons/128x128.png",
+            "icons/128x128@2x.png",
+            "icons/icon.icns",
+            "icons/icon.ico"
+        ],
+        "createUpdaterArtifacts": true
+    },
+    "plugins": {
+        "updater": {
+            "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEZGNDE0QUI1NUI3NkE2MTEKUldRUnBuWmJ0VXBCLy9sVWFjSXFVWmJWTkI2dUhOMHVONEk4UnZXaU8vVmY5SFpUY29Wb3lmaTUK",
+            "endpoints": [
+                "https://github.com/NEXORA-Studios/NovaCL/releases/latest/download/latest.json"
+            ]
+        }
+    }
+}

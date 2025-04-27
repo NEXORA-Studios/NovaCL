@@ -1,0 +1,16 @@
+{
+    "tabWidth": 4,
+    "singleAttributePerLine": true,
+    "vueIndentScriptAndStyle": true,
+    "bracketSameLine": true,
+    "printWidth": 80,
+    "overrides": [
+        {
+            "files": "src/components/Loader/LogoLoaderLogo.vue",
+            "options": {
+                "singleAttributePerLine": false,
+                "printWidth": 256
+            }
+        }
+    ]
+}
