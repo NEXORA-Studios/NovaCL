@@ -11,6 +11,13 @@
                 "singleAttributePerLine": false,
                 "printWidth": 256
             }
+        },
+        {
+            "files": ".github/workflows/*.yml",
+            "options": {
+                "printWidth": 999,
+                "tabWidth": 2
+            }
         }
     ]
 }

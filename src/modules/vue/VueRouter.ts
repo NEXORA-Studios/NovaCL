@@ -16,6 +16,11 @@ const routes = [
         name: "Settings",
         component: () => import("@/views/Settings.vue"),
     },
+    {
+        path: "/more",
+        name: "More",
+        component: () => import("@/views/More.vue"),
+    },
 ];
 
 const ModRouter = createRouter({

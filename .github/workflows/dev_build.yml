@@ -1,4 +1,4 @@
-name: 'Build App for Development'
+name: "Build App for Development"
 
 on:
   workflow_dispatch:
@@ -20,14 +20,24 @@ jobs:
       - name: install frontend dependencies
         run: |
           npm install -g pnpm
-          pnpm install 
+          pnpm install
+
+      - name: Set environment variables
+        run: |
+          echo "VITE_CHANNEL=rift" >> $GITHUB_ENV
+          echo "VITE_GIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          echo "VITE_BUILD_TIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> $GITHUB_ENV
 
       - name: build
         shell: bash
+        env:
+          VITE_CHANNEL: ${{ env.VITE_CHANNEL }}
+          VITE_GIT_HASH: ${{ env.VITE_GIT_HASH }}
+          VITE_BUILD_TIME: ${{ env.VITE_BUILD_TIME }}
         run: |
-            export TAURI_SIGNING_PRIVATE_KEY=${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
-            export TAURI_SIGNING_PRIVATE_KEY_PASSWORD=${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
-            pnpm tauri build
+          export TAURI_SIGNING_PRIVATE_KEY=${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          export TAURI_SIGNING_PRIVATE_KEY_PASSWORD=${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+          pnpm tauri build
 
       - name: upload
         uses: actions/upload-artifact@v4

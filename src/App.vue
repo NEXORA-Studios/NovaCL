@@ -10,7 +10,9 @@
         <section
             class="w-full transition-opacity duration-300 ease-in-out h-full"
             id="main">
-            <RouterView />
+            <Suspense>
+                <RouterView />
+            </Suspense>
         </section>
     </div>
 </template>
