@@ -23,7 +23,11 @@ jobs:
           pnpm install 
 
       - name: build
-        run: pnpm tauri build
+        shell: bash
+        run: |
+            export TAURI_SIGNING_PRIVATE_KEY=${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+            export TAURI_SIGNING_PRIVATE_KEY_PASSWORD=${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+            pnpm tauri build
 
       - name: upload
         uses: actions/upload-artifact@v4
