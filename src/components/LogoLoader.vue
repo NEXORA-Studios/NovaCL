@@ -1,6 +1,5 @@
 <script setup lang="ts">
-    
-    import LogoLoaderLogo from "./LogoLoaderLogo.vue";
+    import LogoLoaderLogo from "./_LogoLoaderLogo.vue";
     const props = defineProps<{
         text: string;
         error?: boolean;

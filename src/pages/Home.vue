@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import { BlurBackground } from "@/components";
-    import { getImageNameFromVersionCode } from "@/modules";
+    import { getImageNameFromVersionCode } from "@/utils";
 
     const MC_VERSION = "1.21.1";
     const MC_DESCRIPTION = "NeoForge 21.1.162";
@@ -38,20 +38,11 @@
                 <div
                     right
                     class="h-full flex items-end gap-4">
-                    <div
-                        class="join h-3/5"
-                        style="--radius-field: calc(infinity * 1px)">
-                        <button
-                            class="btn h-full border-info text-2xl tracking-wider px-6 join-item">
-                            <i
-                                class="icon-[mdi--account-cog] scale-140 translate-x-1" />
-                        </button>
-                        <button
-                            class="btn h-full border-info text-2xl tracking-wider px-6 join-item">
-                            <i
-                                class="icon-[mdi--application-cog-outline] scale-120 -translate-x-1" />
-                        </button>
-                    </div>
+                    <button
+                        class="btn h-3/5 border-info text-2xl tracking-wider px-6 rounded-full">
+                        <i
+                            class="icon-[mdi--application-cog-outline] scale-120" />
+                    </button>
                     <button
                         :class="$style.colorfulBtn"
                         class="btn h-3/5 border-info text-2xl tracking-wider rounded-full px-6">

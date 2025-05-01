@@ -1,28 +1,15 @@
 <script setup lang="ts">
     import { ref } from "vue";
     import { getCurrentWindow } from "@tauri-apps/api/window";
-    import { openUrl } from "@tauri-apps/plugin-opener";
-    import { ModRouter } from "@/modules";
-    import { NavButton } from "..";
+    // import { openUrl } from "@tauri-apps/plugin-opener";
+    import { ModRouter } from "@/router";
+    import NavButton from "./_NavButton.vue";
+    import { IMenuItem, MenuIcons, MenuPaths } from "@/types/Nav";
 
-    interface IMenuItem {
-        title: string;
-        icon: MenuIcons;
-        path: string;
-        extraClass?: string;
-    }
-    enum MenuIcons {
-        Home = "meteor-icons--home",
-        Download = "meteor-icons--download",
-        Settings = "meteor-icons--grid",
-        More = "meteor-icons--ellipsis",
-    }
-    enum MenuPaths {
-        Home = "/",
-        Download = "/download",
-        Settings = "/settings",
-        More = "/more",
-    }
+    const close = async () => {
+        await getCurrentWindow().close();
+    };
+
     const btnHome = {
         title: "",
         icon: MenuIcons.Home,
@@ -46,10 +33,6 @@
         icon: MenuIcons.More,
         path: MenuPaths.More,
         extraClass: "scale-75",
-    };
-
-    const close = async () => {
-        await getCurrentWindow().close();
     };
 
     const btns = [btnHome, btnDownload, btnSettings, btnMore];
@@ -92,9 +75,8 @@
         <div
             class="tooltip tooltip-left"
             data-tip="最近都发生了什么？查看新闻">
-            <NavButton @click="openUrl(`https://afdian.com/@NEXORA-Studios`)">
-                <i
-                    class="icon-[meteor-icons--newspaper] scale-75 size-5.5" />
+            <NavButton>
+                <i class="icon-[meteor-icons--newspaper] scale-75 size-5.5" />
             </NavButton>
         </div>
         <!-- 右侧：动态页面切换菜单 -->

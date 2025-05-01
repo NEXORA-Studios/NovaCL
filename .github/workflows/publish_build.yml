@@ -50,18 +50,18 @@ jobs:
 
       - name: Set environment variables
         run: |
-          echo "VITE_CHANNEL=rift" >> $GITHUB_ENV
-          echo "VITE_GIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-          echo "VITE_BUILD_TIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> $GITHUB_ENV
+          echo "NOVA_CHANNEL=rift" >> $GITHUB_ENV
+          echo "NOVA_GIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          echo "NOVA_BUILD_TIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> $GITHUB_ENV
 
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
-          VITE_CHANNEL: ${{ env.VITE_CHANNEL }}
-          VITE_GIT_HASH: ${{ env.VITE_GIT_HASH }}
-          VITE_BUILD_TIME: ${{ env.VITE_BUILD_TIME }}
+          NOVA_CHANNEL: ${{ env.NOVA_CHANNEL }}
+          NOVA_GIT_HASH: ${{ env.NOVA_GIT_HASH }}
+          NOVA_BUILD_TIME: ${{ env.NOVA_BUILD_TIME }}
         with:
           tagName: __VERSION__+rift # the action automatically replaces \_\_VERSION\_\_ with the app version.
           releaseName: Rift Channel - __VERSION__

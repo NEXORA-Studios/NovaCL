@@ -24,16 +24,16 @@ jobs:
 
       - name: Set environment variables
         run: |
-          echo "VITE_CHANNEL=rift" >> $GITHUB_ENV
-          echo "VITE_GIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-          echo "VITE_BUILD_TIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> $GITHUB_ENV
+          echo "NOVA_CHANNEL=rift" >> $GITHUB_ENV
+          echo "NOVA_GIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          echo "NOVA_BUILD_TIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> $GITHUB_ENV
 
       - name: build
         shell: bash
         env:
-          VITE_CHANNEL: ${{ env.VITE_CHANNEL }}
-          VITE_GIT_HASH: ${{ env.VITE_GIT_HASH }}
-          VITE_BUILD_TIME: ${{ env.VITE_BUILD_TIME }}
+          NOVA_CHANNEL: ${{ env.NOVA_CHANNEL }}
+          NOVA_GIT_HASH: ${{ env.NOVA_GIT_HASH }}
+          NOVA_BUILD_TIME: ${{ env.NOVA_BUILD_TIME }}
         run: |
           export TAURI_SIGNING_PRIVATE_KEY=${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           export TAURI_SIGNING_PRIVATE_KEY_PASSWORD=${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}

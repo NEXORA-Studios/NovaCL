@@ -24,9 +24,9 @@
         time: string;
     }>({
         version: await getVersion(),
-        channel: channelWrapper($meta.VITE_CHANNEL),
-        hash: $meta.VITE_GIT_HASH ?? "native",
-        time: $meta.VITE_BUILD_TIME ?? "本地构建中",
+        channel: channelWrapper($meta.NOVA_CHANNEL),
+        hash: $meta.NOVA_GIT_HASH ?? "native",
+        time: $meta.NOVA_BUILD_TIME ?? "本地构建中",
     });
 </script>
 <template>
