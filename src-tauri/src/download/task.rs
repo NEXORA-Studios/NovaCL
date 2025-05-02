@@ -1,7 +1,10 @@
+use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
-use std::sync::{Arc, Mutex, atomic::{AtomicU64, Ordering}};
+use std::sync::{
+    atomic::{AtomicU64, Ordering},
+    Arc, Mutex,
+};
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
-use serde::{Serialize, Deserialize};
 
 use crate::download::error::DownloadError;
 
@@ -52,7 +55,7 @@ impl DownloadProgress {
     /// 更新下载进度
     pub fn update(&mut self, downloaded: u64, elapsed: Duration) {
         self.downloaded = downloaded;
-        
+
         // 计算下载速度
         if !elapsed.is_zero() {
             let elapsed_secs = elapsed.as_secs_f64();
@@ -60,7 +63,7 @@ impl DownloadProgress {
                 self.speed = (downloaded as f64 / elapsed_secs) as u64;
             }
         }
-        
+
         // 计算剩余时间
         if self.speed > 0 && self.downloaded < self.total {
             self.eta = (self.total - self.downloaded) / self.speed;
@@ -103,7 +106,13 @@ pub struct DownloadTask {
 
 impl DownloadTask {
     /// 创建一个新的下载任务
-    pub fn new(id: String, url: String, save_path: PathBuf, filename: String, segments: usize) -> Self {
+    pub fn new(
+        id: String,
+        url: String,
+        save_path: PathBuf,
+        filename: String,
+        segments: usize,
+    ) -> Self {
         Self {
             id,
             url,
@@ -132,17 +141,18 @@ impl DownloadTask {
     /// 更新下载进度
     pub fn update_progress(&self, downloaded: u64) -> Result<(), DownloadError> {
         let mut progress = self.progress.lock().map_err(|_| DownloadError::LockError)?;
-        
+
         let start_timestamp = self.start_time.load(Ordering::Relaxed);
         let elapsed = if start_timestamp > 0 {
-            let now = SystemTime::now().duration_since(UNIX_EPOCH)
+            let now = SystemTime::now()
+                .duration_since(UNIX_EPOCH)
                 .unwrap_or(Duration::from_secs(0))
                 .as_millis() as u64;
             Duration::from_millis(now.saturating_sub(start_timestamp))
         } else {
             Duration::from_secs(0)
         };
-        
+
         progress.update(downloaded, elapsed);
         Ok(())
     }
@@ -159,13 +169,15 @@ impl DownloadTask {
         let progress = self.progress.lock().map_err(|_| DownloadError::LockError)?;
         Ok(progress.clone())
     }
-    
+
     /// 设置开始时间
     pub fn set_start_time(&self) -> Result<(), DownloadError> {
         // 使用当前时间的UNIX时间戳（毫秒）
-        let now = SystemTime::now().duration_since(UNIX_EPOCH)
+        let now = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
             .map_err(|e| DownloadError::Other(format!("获取系统时间失败: {}", e)))?;
-        self.start_time.store(now.as_millis() as u64, Ordering::Relaxed);
+        self.start_time
+            .store(now.as_millis() as u64, Ordering::Relaxed);
         Ok(())
     }
 }

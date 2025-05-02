@@ -11,10 +11,7 @@
                 max-height: calc(100% - 48px);
                 overflow: hidden;
             ">
-            <LogoLoader
-                error
-                text="此页面施工中……"
-                error-text="未知错误……" />
+            <LogoLoader text="此页面施工中……" />
             <!-- <div class="tabs tabs-lift">
                 <label class="tab">
                     <input

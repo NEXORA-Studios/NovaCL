@@ -46,7 +46,7 @@
             :class="{ 'opacity-100': showBackToTop }"
             class="btn btn-circle btn-primary hover:btn-secondary fixed bottom-4 right-4 z-50 opacity-0 transition-all ease-in-out duration-150"
             @click="scrollToTop">
-            <i class="icon-[mdi--arrow-up] size-8" />
+            <i class="icon-[octicon--move-to-top-16] size-5" />
         </button>
     </div>
 </template>

@@ -31,8 +31,9 @@ async fn start_download(
     let manager = state.inner().manager.lock().await;
     let save_path = PathBuf::from(save_path);
     let segments = segments.unwrap_or(4); // 默认4个分段
-    
-    manager.add_task(&url, save_path, filename, segments)
+
+    manager
+        .add_task(&url, save_path, filename, segments)
         .await
         .map_err(|e| e.to_string())
 }
@@ -43,7 +44,8 @@ async fn pause_download(
     state: State<'_, DownloadManagerState>,
 ) -> Result<(), String> {
     let manager = state.inner().manager.lock().await;
-    manager.pause_task(&task_id)
+    manager
+        .pause_task(&task_id)
         .await
         .map_err(|e| e.to_string())
 }
@@ -54,7 +56,8 @@ async fn resume_download(
     state: State<'_, DownloadManagerState>,
 ) -> Result<(), String> {
     let manager = state.inner().manager.lock().await;
-    manager.resume_task(&task_id)
+    manager
+        .resume_task(&task_id)
         .await
         .map_err(|e| e.to_string())
 }
@@ -65,7 +68,8 @@ async fn cancel_download(
     state: State<'_, DownloadManagerState>,
 ) -> Result<(), String> {
     let manager = state.inner().manager.lock().await;
-    manager.cancel_task(&task_id)
+    manager
+        .cancel_task(&task_id)
         .await
         .map_err(|e| e.to_string())
 }
@@ -76,7 +80,8 @@ async fn get_download_progress(
     state: State<'_, DownloadManagerState>,
 ) -> Result<DownloadProgress, String> {
     let manager = state.inner().manager.lock().await;
-    manager.get_task_progress(&task_id)
+    manager
+        .get_task_progress(&task_id)
         .map_err(|e| e.to_string())
 }
 
@@ -85,8 +90,7 @@ async fn get_all_downloads(
     state: State<'_, DownloadManagerState>,
 ) -> Result<Vec<(String, DownloadProgress)>, String> {
     let manager = state.inner().manager.lock().await;
-    manager.get_tasks()
-        .map_err(|e| e.to_string())
+    manager.get_tasks().map_err(|e| e.to_string())
 }
 
 // HTTP客户端命令
@@ -97,15 +101,13 @@ async fn http_get(
     state: State<'_, HttpClientState>,
 ) -> Result<String, String> {
     let mut client = state.inner().client.lock().await;
-    
+
     // 如果提供了自定义UserAgent，则重新创建客户端
     if let Some(ua) = &user_agent {
         *client = HttpClient::with_user_agent(ua);
     }
-    
-    client.get_text(&url)
-        .await
-        .map_err(|e| e.to_string())
+
+    client.get_text(&url).await.map_err(|e| e.to_string())
 }
 
 #[tauri::command]
@@ -116,13 +118,14 @@ async fn http_post_json<T: serde::Serialize>(
     state: State<'_, HttpClientState>,
 ) -> Result<String, String> {
     let mut client = state.inner().client.lock().await;
-    
+
     // 如果提供了自定义UserAgent，则重新创建客户端
     if let Some(ua) = &user_agent {
         *client = HttpClient::with_user_agent(ua);
     }
-    
-    client.post_json::<T, serde_json::Value>(&url, &data)
+
+    client
+        .post_json::<T, serde_json::Value>(&url, &data)
         .await
         .map(|json| json.to_string())
         .map_err(|e| e.to_string())
@@ -135,14 +138,16 @@ pub fn run() {
     let download_manager_state = DownloadManagerState {
         manager: Arc::new(Mutex::new(download_manager)),
     };
-    
+
     // 创建HTTP客户端
     let http_client = HttpClient::new();
     let http_client_state = HttpClientState {
         client: Arc::new(Mutex::new(http_client)),
     };
-    
+
     tauri::Builder::default()
+        .plugin(tauri_plugin_window_state::Builder::new().build())
+        .plugin(tauri_plugin_process::init())
         .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(tauri_plugin_store::Builder::new().build())
         .plugin(tauri_plugin_opener::init())

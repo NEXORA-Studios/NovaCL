@@ -7,7 +7,7 @@
         ViewSwitch,
     } from "@/components";
     import { IViewItem } from "@/types/ViewSwitch";
-    import DownloadClientjar from "@/views/DownloadClientJar.vue";
+    import { DownloadClientJar, DownloadComp } from "@/views";
 
     const subView = ref<IViewItem>({
         label: "Minecraft 核心",
@@ -28,8 +28,8 @@
     const subViewComponents: {
         [key: string]: any | null;
     } = {
-        clientjar: h(DownloadClientjar, { filter: searchContent }),
-        mod: null,
+        clientjar: h(DownloadClientJar, { filter: searchContent }),
+        mod: h(DownloadComp),
         modpack: null,
         resourcepack: null,
         shaderpack: null,

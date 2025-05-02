@@ -1,9 +1,9 @@
 <script setup lang="ts">
     import { ref, onMounted, Ref, watch } from "vue";
     import { IClientVersionItem, IClientVersionList } from "@/types/Client";
-    import { getMinecraftClientVersions } from "@/modules";
     import { Card } from "@/components";
     import LogoLoader from "@/components/LogoLoader.vue";
+    import { useClientJarMetadataStore } from "@/stores";
 
     const props = defineProps<{
         filter: Ref<string | undefined>;
@@ -39,9 +39,13 @@
         ];
     }
 
-    onMounted(async () => {
-        clientVersionList.value = await getMinecraftClientVersions();
-        isLoaded.value = true;
+    const ClientJarMetadataStore = useClientJarMetadataStore();
+    onMounted(() => {
+        setTimeout(async function () {
+            clientVersionList.value =
+                await ClientJarMetadataStore.getClientVersionList();
+            isLoaded.value = true;
+        }, 1000);
     });
 
     watch(

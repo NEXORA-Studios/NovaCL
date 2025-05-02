@@ -1,8 +1,10 @@
 <script setup lang="ts">
-    import { BlurBackground } from "@/components";
     import { reactive } from "vue";
     import { getVersion } from "@tauri-apps/api/app";
     import { openUrl } from "@tauri-apps/plugin-opener";
+    import { check } from "@tauri-apps/plugin-updater";
+    import { relaunch } from "@tauri-apps/plugin-process";
+    import { BlurBackground } from "@/components";
 
     const $meta = import.meta.env;
 
@@ -28,6 +30,38 @@
         hash: $meta.NOVA_GIT_HASH ?? "native",
         time: $meta.NOVA_BUILD_TIME ?? "本地构建中",
     });
+
+    const checkUpdate = async () => {
+        const update = await check();
+        if (update) {
+            console.log(
+                `found update ${update.version} from ${update.date} with notes ${update.body}`
+            );
+            let downloaded = 0;
+            let contentLength = 0;
+            await update.downloadAndInstall((event) => {
+                switch (event.event) {
+                    case "Started":
+                        contentLength = event.data.contentLength!;
+                        console.log(
+                            `started downloading ${event.data.contentLength} bytes`
+                        );
+                        break;
+                    case "Progress":
+                        downloaded += event.data.chunkLength;
+                        console.log(
+                            `downloaded ${downloaded} from ${contentLength}`
+                        );
+                        break;
+                    case "Finished":
+                        console.log("download finished");
+                        break;
+                }
+            });
+            console.log("update installed");
+            await relaunch();
+        }
+    };
 </script>
 <template>
     <BlurBackground>
@@ -46,8 +80,8 @@
                     <div class="stat-value">{{ METADATA.version }}</div>
                     <div class="stat-actions">
                         <button
-                            class="btn btn-xs btn-success"
-                            disabled>
+                            class="btn btn-xs btn-accent"
+                            @click="checkUpdate()">
                             检查更新
                         </button>
                     </div>

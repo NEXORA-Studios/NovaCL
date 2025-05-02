@@ -41,10 +41,7 @@ impl HttpClient {
             .build()
             .unwrap_or_default();
 
-        Self {
-            client,
-            timeout,
-        }
+        Self { client, timeout }
     }
 
     /// 设置超时时间
@@ -169,11 +166,11 @@ impl HttpClient {
     /// 创建一个HeaderMap，包含自定义的UserAgent
     pub fn create_headers(&self, user_agent: Option<&str>) -> Result<HeaderMap, NetworkError> {
         let mut headers = HeaderMap::new();
-        
+
         if let Some(ua) = user_agent {
             headers.insert(USER_AGENT, HeaderValue::from_str(ua)?);
         }
-        
+
         Ok(headers)
     }
 }

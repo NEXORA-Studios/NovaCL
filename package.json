@@ -12,8 +12,10 @@
     "dependencies": {
         "@tauri-apps/api": "^2",
         "@tauri-apps/plugin-opener": "^2",
+        "@tauri-apps/plugin-process": "~2.2.1",
         "@tauri-apps/plugin-store": "~2.2.0",
         "@tauri-apps/plugin-updater": "~2",
+        "@tauri-apps/plugin-window-state": "~2.2.2",
         "vue": "^3.5.13"
     },
     "devDependencies": {
@@ -26,6 +28,7 @@
         "@tauri-apps/cli": "^2",
         "@vitejs/plugin-vue": "^5.2.1",
         "daisyui": "^5.0.27",
+        "pinia": "^3.0.2",
         "sass-embedded": "^1.87.0",
         "tailwindcss": "^4.1.4",
         "typescript": "~5.8.3",
